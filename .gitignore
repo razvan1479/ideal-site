@@ -1,0 +1,11 @@
+# OS
+.DS_Store
+Thumbs.db
+# Editor
+.vscode/
+.idea/
+# Vercel
+.vercel
+# Logs / deps (dacă adaugi ceva pe viitor)
+node_modules/
+*.log
