@@ -126,10 +126,9 @@ $("send").addEventListener("click",async()=>{
 })();
 
 
-/* ===== Discord: avatar (bot token) + iconițe/nume/membri servere (invite) ===== */
+/* ===== Discord: avatar (bot token) + iconițe/nume servere (invite) ===== */
 (function(){
   const cards=[...document.querySelectorAll('.swap-card[data-invite]')].filter(c=>c.dataset.invite);
-  cards.forEach(c=>{const a=c.querySelector('.join'); if(a) a.href='https://discord.gg/'+c.dataset.invite;});
   const codes=[...new Set(cards.map(c=>c.dataset.invite))];
   const avatars=[...document.querySelectorAll('.js-avatar')];
   if(!codes.length && !avatars.length) return;
@@ -145,7 +144,6 @@ $("send").addEventListener("click",async()=>{
         const art=c.querySelector('.art');
         if(srv.icon && art){art.textContent='';art.style.backgroundImage=`url(${srv.icon})`;art.style.backgroundSize='cover';art.style.backgroundPosition='center';}
         if(srv.name){const n=c.querySelector('.js-name'); if(n) n.textContent=srv.name;}
-        if(srv.members!=null){const m=c.querySelector('.js-members'); if(m) m.textContent=srv.members.toLocaleString('en-US')+' members';}
       });
     })
     .catch(()=>{});

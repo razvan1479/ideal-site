@@ -101,17 +101,15 @@
   .swap-stage{position:relative;height:520px;overflow:hidden}
   .cardswap{position:absolute;bottom:24px;left:calc(50% - 213px);width:256px;height:290px;transform-style:preserve-3d}
   .swap-card{position:absolute;top:0;left:0;width:100%;height:100%;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);box-shadow:0 16px 30px -18px rgba(0,0,0,.6);backface-visibility:hidden;will-change:transform;display:flex;flex-direction:column}
-  .swap-card .art{height:118px;position:relative;display:grid;place-items:center;font-weight:800;font-size:1.35rem;color:#fff}
+  .swap-card .art{flex:1;min-height:0;position:relative;display:grid;place-items:center;font-weight:800;font-size:1.6rem;color:#fff}
   .swap-card:nth-child(6n+1) .art{background:linear-gradient(135deg,#5865F2,#8b95ff)}
   .swap-card:nth-child(6n+2) .art{background:linear-gradient(135deg,#3ba55c,#57d98a)}
   .swap-card:nth-child(6n+3) .art{background:linear-gradient(135deg,#5865F2,#c05cf2)}
   .swap-card:nth-child(6n+4) .art{background:linear-gradient(135deg,#e0a94a,#f2c14e)}
   .swap-card:nth-child(6n+5) .art{background:linear-gradient(135deg,#4752c4,#5865F2)}
   .swap-card:nth-child(6n) .art{background:linear-gradient(135deg,#2b6cb0,#5fb0d8)}
-  .swap-card .body{padding:20px;flex:1;display:flex;flex-direction:column}
-  .swap-card h3{font-size:1.15rem}
-  .swap-card .join{margin-top:auto;color:#a6b0ff;font-weight:700;font-size:.92rem;align-self:flex-start}
-  .swap-card .join:hover{color:#fff}
+  .swap-card .body{padding:14px 16px;text-align:center;border-top:1px solid var(--line)}
+  .swap-card h3{font-size:1.1rem}
   .swap-card p{color:var(--muted);font-size:.86rem;margin:8px 0 14px;flex:1}
   .chips{display:flex;gap:8px;flex-wrap:wrap}
   .chip{font-size:.73rem;padding:4px 10px;border-radius:6px;background:var(--elevated);color:var(--txt)}
