@@ -15,7 +15,7 @@
 
 <div class="app">
   <nav class="rail">
-    <div class="server brand-server active" data-scroll="#acasa" title="iDeaL">iD<span class="pill"></span></div>
+    <div class="server brand-server active js-avatar" data-scroll="#acasa" title="iDeaL">iD<span class="pill"></span></div>
     <div class="sep"></div>
     <div class="server" data-scroll="#servicii" title="Servicii">🛠<span class="pill"></span></div>
     <div class="server" data-scroll="#proiecte" title="Proiecte">📁<span class="pill"></span></div>
@@ -28,15 +28,14 @@
       <div class="cat">Info</div>
       <div class="chan active" data-scroll="#acasa"><span class="hash">#</span><span data-i18n="ch.home">acasă</span></div>
       <div class="chan" data-scroll="#servicii"><span class="hash">#</span><span data-i18n="ch.svc">servicii</span></div>
-      <div class="cat">Portofoliu</div>
+      <div class="cat">Portfolio</div>
       <div class="chan" data-scroll="#proiecte"><span class="hash">#</span><span data-i18n="ch.proj">proiecte</span></div>
       <div class="cat">Contact</div>
       <div class="chan" data-scroll="#contact"><span class="hash">#</span><span data-i18n="ch.contact">contact</span></div>
     </div>
     <div class="user">
-      <div class="av">iD</div>
+      <div class="av js-avatar">iD</div>
       <div><div class="un">iDeaL</div><div class="st" data-i18n="u.online">online</div></div>
-      <div class="lang"><button data-lang="ro" class="active">RO</button><button data-lang="en">EN</button></div>
     </div>
   </aside>
 
@@ -44,14 +43,13 @@
     <div class="mobtop">
       <button class="burger" id="burger">☰</button>
       <span class="mob-brand">iDeaL</span>
-      <div class="lang" style="margin-left:auto"><button data-lang="ro" class="active">RO</button><button data-lang="en">EN</button></div>
     </div>
-    <div class="chan-head"><span class="hash">#</span><span id="chan-title">acasă</span><span class="topic" data-i18n="ch.topic">Servere & boți de Discord, făcute ca la carte.</span></div>
+    <div class="chan-head"><span class="hash">#</span><span id="chan-title">home</span><span class="topic" data-i18n="ch.topic">Servere & boți de Discord, făcute ca la carte.</span></div>
 
     <div class="scroll" id="scroll">
       <section id="acasa" class="hero"><div class="wrap">
         <div class="welcome-hash">#</div>
-        <h1 data-i18n="hero.title">Comunitatea ta, construită cum trebuie.</h1>
+        <h1>Your community, <span class="grad">built right.</span></h1>
         <p data-i18n="hero.lead">Servere Discord curate și boți custom pentru comunități de gaming — de la arhitectura canalelor până la automatizări care chiar rețin oamenii.</p>
         <div class="cta">
           <button class="btn" data-scroll="#contact" data-i18n="hero.cta1">Cere un server</button>
@@ -82,12 +80,12 @@
         </div>
         <div class="swap-stage sr">
           <div class="cardswap" id="cardswap">
-            <div class="swap-card"><div class="art">Apollo2</div><div class="body"><h3>Apollo2</h3><p data-i18n="pr1.p">Server privat de Metin2 — arhitectură și comunitate.</p><div class="chips"><span class="chip">Metin2</span><span class="chip">Community</span></div></div></div>
-            <div class="swap-card"><div class="art">Sir Penguin</div><div class="body"><h3>Sir Penguin</h3><p data-i18n="pr2.p">Bot cu dashboard web și multe funcții.</p><div class="chips"><span class="chip">Bot</span><span class="chip">Web</span></div></div></div>
-            <div class="swap-card"><div class="art">iDeaL Mix</div><div class="body"><h3>iDeaL Mix</h3><p data-i18n="pr3.p">Matchmaking 5v5 — MMR, leaderboard, sezoane.</p><div class="chips"><span class="chip">Bot</span><span class="chip">Gaming</span></div></div></div>
-            <div class="swap-card"><div class="art">Marketplace</div><div class="body"><h3>Marketplace Bot</h3><p data-i18n="pr4.p">Tranzacții cu intermediar și tickete.</p><div class="chips"><span class="chip">Bot</span></div></div></div>
-            <div class="swap-card"><div class="art">Calendar</div><div class="body"><h3>Calendar Bot</h3><p data-i18n="pr5.p">Calendar lunar cu evenimente și notificări.</p><div class="chips"><span class="chip">Bot</span></div></div></div>
-            <div class="swap-card"><div class="art">Leaderboard</div><div class="body"><h3>Leaderboard Promoteri</h3><p data-i18n="pr6.p">Clasament pe voturi și scor.</p><div class="chips"><span class="chip">Bot</span></div></div></div>
+            <div class="swap-card" data-invite=""><div class="art">Apollo2</div><div class="body"><h3>Apollo2</h3><p data-i18n="pr1.p">Server privat de Metin2 — arhitectură și comunitate.</p><div class="chips"><span class="chip">Metin2</span><span class="chip">Community</span></div></div></div>
+            <div class="swap-card" data-invite=""><div class="art">Sir Penguin</div><div class="body"><h3>Sir Penguin</h3><p data-i18n="pr2.p">Bot cu dashboard web și multe funcții.</p><div class="chips"><span class="chip">Bot</span><span class="chip">Web</span></div></div></div>
+            <div class="swap-card" data-invite=""><div class="art">iDeaL Mix</div><div class="body"><h3>iDeaL Mix</h3><p data-i18n="pr3.p">Matchmaking 5v5 — MMR, leaderboard, sezoane.</p><div class="chips"><span class="chip">Bot</span><span class="chip">Gaming</span></div></div></div>
+            <div class="swap-card" data-invite=""><div class="art">Marketplace</div><div class="body"><h3>Marketplace Bot</h3><p data-i18n="pr4.p">Tranzacții cu intermediar și tickete.</p><div class="chips"><span class="chip">Bot</span></div></div></div>
+            <div class="swap-card" data-invite=""><div class="art">Calendar</div><div class="body"><h3>Calendar Bot</h3><p data-i18n="pr5.p">Calendar lunar cu evenimente și notificări.</p><div class="chips"><span class="chip">Bot</span></div></div></div>
+            <div class="swap-card" data-invite=""><div class="art">Leaderboard</div><div class="body"><h3>Leaderboard Promoteri</h3><p data-i18n="pr6.p">Clasament pe voturi și scor.</p><div class="chips"><span class="chip">Bot</span></div></div></div>
           </div>
         </div>
       </div></section>
@@ -96,7 +94,7 @@
         <div class="sec-head sr"><span class="eyebrow" data-i18n="ct.tag">Contact</span><h2 data-i18n="ct.h2">Hai să vorbim despre următorul tău proiect</h2><p data-i18n="ct.p">Completează formularul și pornim un proiect, sau scrie-mi direct pe Discord.</p></div>
         <div class="msgbox sr">
           <div class="field"><label data-i18n="ct.l1">Cum te cheamă?</label><input id="f-name" type="text" data-i18n-ph="ct.p1" placeholder="Numele tău"></div>
-          <div class="field"><label data-i18n="ct.l2">Care e Discord ID-ul tău?</label><input id="f-discord" type="text" placeholder="ex. iDeaL"></div>
+          <div class="field"><label data-i18n="ct.l2">Your Discord</label><input id="f-discord" type="text" placeholder="username, or User ID for 1-click reply"></div>
           <div class="field"><label data-i18n="ct.l3">Care e bugetul tău?</label><input id="f-budget" type="text" placeholder="ex. €30 – €100"></div>
           <div class="field"><label data-i18n="ct.l4">Descrie proiectul</label><textarea id="f-desc" data-i18n-ph="ct.p4" placeholder="Ce vrei să construiesc?"></textarea></div>
           <button class="btn btn-send" id="send" data-i18n="ct.btn">Cere un server</button>
@@ -104,12 +102,11 @@
         </div>
       </div></section>
 
-      <footer><div class="wrap">© 2026 iDeaL · Servere &amp; boți de Discord</div></footer>
+      <footer><div class="wrap">© 2026 iDeaL · Discord servers &amp; bots</div></footer>
     </div>
   </main>
 </div>
 
-<script src="js/config.js"></script>
 <script src="js/main.js"></script>
 <script type="module">
   const c=document.getElementById('tubes');
@@ -119,17 +116,17 @@
       .then(m=>{
         const TubesCursor=m.default;
         const app=TubesCursor(c,{tubes:{colors:["#5865F2","#a6b0ff","#c05cf2"],
-          lights:{intensity:200,colors:["#5865F2","#23a55a","#ff008a","#60aed5"]}}});
+          lights:{intensity:120,colors:["#5865F2","#23a55a","#ff008a","#60aed5"]}}});
 
-        // tracking peste tot: retrimite mișcarea din toată fereastra către canvas
-        const forward=e=>{
-          const x=e.clientX,y=e.clientY;
-          try{c.dispatchEvent(new PointerEvent('pointermove',{clientX:x,clientY:y,bubbles:true,pointerId:e.pointerId||1}));}catch(_){}
-          try{c.dispatchEvent(new MouseEvent('mousemove',{clientX:x,clientY:y,bubbles:true}));}catch(_){}
+        // tracking peste tot, dar throttled la un frame (nu inunda librăria)
+        let lx=innerWidth/2,ly=innerHeight/2,queued=false;
+        const pump=()=>{queued=false;
+          try{c.dispatchEvent(new PointerEvent('pointermove',{clientX:lx,clientY:ly,bubbles:true,pointerId:1}));}catch(_){}
+          try{c.dispatchEvent(new MouseEvent('mousemove',{clientX:lx,clientY:ly,bubbles:true}));}catch(_){}
         };
-        window.addEventListener('pointermove',forward,{passive:true});
-        window.addEventListener('mousemove',forward,{passive:true});
-        window.addEventListener('touchmove',e=>{if(e.touches[0])forward(e.touches[0]);},{passive:true});
+        const queue=()=>{if(!queued){queued=true;requestAnimationFrame(pump);}};
+        window.addEventListener('pointermove',e=>{lx=e.clientX;ly=e.clientY;queue();},{passive:true});
+        window.addEventListener('touchmove',e=>{if(e.touches[0]){lx=e.touches[0].clientX;ly=e.touches[0].clientY;queue();}},{passive:true});
 
         const rnd=n=>Array.from({length:n},()=>"#"+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0'));
         document.addEventListener('click',e=>{

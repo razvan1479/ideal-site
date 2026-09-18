@@ -1,22 +1,26 @@
-# iDeaL — Servere & boți de Discord
+# iDeaL — Discord servers & bots
 
-Fundal negru, stil aplicație Discord, cu **tubes neon** care urmăresc cursorul PESTE TOT.
+English-only. Fundal negru, stil Discord, tubes neon la cursor.
+Live din Discord: avatarul tau + iconitele/nr. membri servere.
+La "Request": botul tau iti da DM cu ce a scris userul + buton "Reply on Discord".
 
-## Structură
-ideal-site/ ├── index.html (layout + loader tubes) ├── css/style.css └── js/{config.js, main.js}
+## Structura
+index.html · css/style.css · js/main.js · api/discord.js · api/contact.js
 
-## Tubes
-- Se încarcă din CDN (threejs-components / jsdelivr) în `<script type="module">` din index.html.
-- Tracking peste tot: mișcarea mouse-ului din fereastră e redirecționată către canvas,
-  deci merge și peste carduri, contact, iconițe. Click pe fundal = culori noi.
-- Bara/lista Discord sunt translucide ca efectul să se vadă și în spatele lor.
-- Culorile inițiale: în scriptul din index.html (`colors`, `lights.colors`).
+## Setup pe Vercel (o data)
+Settings → Environment Variables:
+- DISCORD_BOT_TOKEN = token bot   (Developer Portal → Bot → Reset Token)
+- DISCORD_USER_ID   = ID-ul tau   (Developer Mode ON → click dreapta pe profil → Copy User ID)
+Redeploy. Token DOAR aici, niciodata in cod.
+DM merge daca botul e intr-un server comun cu tine si ai DM-urile deschise.
 
-## Rulare
-VS Code → Live Server → index.html. Are nevoie de internet (CDN).
+## Iconite servere pe carduri
+index.html, la carduri-servere: <div class="swap-card" data-invite="AbCdEf">
+Invite "never expire". Boturile raman cu data-invite="".
 
-## Formular
-`js/config.js`: BOT_ENDPOINT (DM) sau DISCORD_WEBHOOK (canal).
+## Local
+api/ ruleaza pe Vercel. Cu Live Server /api/* nu exista (fallback clipboard).
+Test complet: npm i -g vercel && vercel dev
 
 ## Deploy
-GitHub Pages / Netlify / Vercel.
+git push → Vercel redeployeaza automat.

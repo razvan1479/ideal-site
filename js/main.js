@@ -1,4 +1,4 @@
-/* MAIN — i18n RO/EN, CardSwap (GSAP), navigare Discord, formular */
+/* MAIN — CardSwap (GSAP), navigare Discord, formular -> /api/contact, Discord live */
 /* ===== i18n ===== */
 const I18N={
  ro:{"nav.services":"Servicii","ch.home":"acasă","ch.svc":"servicii","ch.proj":"proiecte","ch.contact":"contact","ch.topic":"Servere & boți de Discord, făcute ca la carte.","u.online":"online","nav.projects":"Proiecte","nav.faq":"FAQ","nav.contact":"Contact",
@@ -45,7 +45,7 @@ function setLang(l){LANG=l;const d=I18N[l];document.documentElement.lang=l;
   document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
   try{localStorage.setItem("ideal-lang",l);}catch(e){}}
 document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
-(function(){let s="ro";try{s=localStorage.getItem("ideal-lang")||"ro";}catch(e){}setLang(s);})();
+setLang("en");
 
 const rm=matchMedia("(prefers-reduced-motion:reduce)").matches;
 if(!rm){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.14});
@@ -53,18 +53,21 @@ if(!rm){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersectin
 
 const $=id=>document.getElementById(id);
 $("send").addEventListener("click",async()=>{
-  const t=$("toast"),d=I18N[LANG];
+  const t=$("toast");
   const name=$("f-name").value.trim(),desc=$("f-desc").value.trim();
-  if(!name||!desc){t.style.color="#e06565";t.textContent=d["t.err"];return;}
+  if(!name||!desc){t.style.color="#e06565";t.textContent="Please fill in at least your name and the project description.";return;}
   const data={name,discord:$("f-discord").value.trim(),budget:$("f-budget").value.trim(),project:desc};
-  const plain=`Cerere proiect iDeaL\nNume: ${name}\nDiscord: ${data.discord||"-"}\nBuget: ${data.budget||"-"}\nProiect: ${desc}`;
+  const plain=`New iDeaL request\nName: ${name}\nDiscord: ${data.discord||"-"}\nBudget: ${data.budget||"-"}\nProject: ${desc}`;
+  t.style.color="var(--muted)";t.textContent="Sending…";
   try{
-    if(BOT_ENDPOINT){t.style.color="var(--muted)";t.textContent=d["t.sending"];
-      const r=await fetch(BOT_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});if(!r.ok)throw 0;t.style.color="var(--ok)";t.textContent=d["t.sent"];return;}
-    if(DISCORD_WEBHOOK){t.style.color="var(--muted)";t.textContent=d["t.sending"];
-      const r=await fetch(DISCORD_WEBHOOK,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({embeds:[{title:"Cerere nouă — iDeaL",color:8156927,fields:[{name:"Nume",value:name,inline:true},{name:"Discord",value:data.discord||"-",inline:true},{name:"Buget",value:data.budget||"-"},{name:"Proiect",value:desc}]}]})});if(!r.ok)throw 0;t.style.color="var(--ok)";t.textContent=d["t.sent"];return;}
-    throw 0;
-  }catch(e){try{await navigator.clipboard.writeText(plain);}catch(_){}t.style.color="var(--ok)";t.textContent=d["t.copy"];}
+    const r=await fetch("/api/contact",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
+    if(!r.ok) throw 0;
+    t.style.color="var(--ok)";t.textContent="Request sent — I'll get back to you on Discord. ✓";
+    ["f-name","f-discord","f-budget","f-desc"].forEach(id=>$(id).value="");
+  }catch(e){
+    try{await navigator.clipboard.writeText(plain);}catch(_){}
+    t.style.color="var(--ok)";t.textContent="Copied — send it to iDeaL on Discord.";
+  }
 });
 
 /* ===== CardSwap — teanc de carduri 3D cu swap automat (GSAP) ===== */
@@ -120,4 +123,33 @@ $("send").addEventListener("click",async()=>{
   const burg=document.getElementById("burger");
   if(burg&&sidebar)burg.addEventListener("click",()=>sidebar.classList.toggle("open"));
   syncTitle();
+})();
+
+
+/* ===== Discord: avatar (bot token) + iconițe servere (invite) ===== */
+(function(){
+  const cards=[...document.querySelectorAll('.swap-card[data-invite]')].filter(c=>c.dataset.invite);
+  const codes=[...new Set(cards.map(c=>c.dataset.invite))];
+  const avatars=[...document.querySelectorAll('.js-avatar')];
+  if(!codes.length && !avatars.length) return;
+  fetch('/api/discord?invites='+encodeURIComponent(codes.join(',')))
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{
+      if(!d) return;
+      if(d.user && d.user.avatar){
+        avatars.forEach(el=>{el.textContent='';el.style.backgroundImage=`url(${d.user.avatar})`;el.style.backgroundSize='cover';el.style.backgroundPosition='center';});
+      }
+      cards.forEach(c=>{
+        const srv=d.servers && d.servers[c.dataset.invite]; if(!srv) return;
+        const art=c.querySelector('.art');
+        if(srv.icon && art){art.textContent='';art.style.backgroundImage=`url(${srv.icon})`;art.style.backgroundSize='cover';art.style.backgroundPosition='center';}
+        if(srv.members!=null){
+          const chips=c.querySelector('.chips');
+          if(chips && !chips.querySelector('.js-members')){
+            const s=document.createElement('span');s.className='chip js-members';s.textContent=srv.members.toLocaleString('ro-RO')+' membri';chips.appendChild(s);
+          }
+        }
+      });
+    })
+    .catch(()=>{});
 })();
