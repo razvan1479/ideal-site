@@ -15,6 +15,14 @@
   ::-webkit-scrollbar{width:10px}::-webkit-scrollbar-thumb{background:#1a1b1e;border-radius:8px}::-webkit-scrollbar-track{background:transparent}
 
   .app{display:flex;height:100vh;overflow:hidden;position:relative;z-index:1}
+  .content{flex:1;display:flex;flex-direction:column;min-width:0}
+  .topbar{height:60px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;
+    background:rgba(0,0,0,.5);box-shadow:0 1px 0 rgba(255,255,255,.06);position:relative;z-index:5}
+  .tb-brand{display:flex;align-items:center;gap:11px}
+  .tb-av{width:34px;height:34px;border-radius:50%;background:var(--blurple);display:grid;place-items:center;font-family:var(--font);font-weight:800;color:#fff;font-size:.8rem;background-size:cover;background-position:center}
+  .tb-name{font-weight:800;font-size:1.15rem;color:var(--h)}
+  .tb-cta{cursor:pointer}
+  @media(max-width:600px){.topbar{padding:0 16px}.tb-cta{padding:9px 14px;font-size:.86rem}}
   .chan-head{background:rgba(0,0,0,.55)}
   .hero h1,.hero p{text-shadow:0 2px 24px rgba(0,0,0,.85)}
   /* server rail */
@@ -102,6 +110,8 @@
   .swap-card:nth-child(6n) .art{background:linear-gradient(135deg,#2b6cb0,#5fb0d8)}
   .swap-card .body{padding:20px;flex:1;display:flex;flex-direction:column}
   .swap-card h3{font-size:1.15rem}
+  .swap-card .join{margin-top:auto;color:#a6b0ff;font-weight:700;font-size:.92rem;align-self:flex-start}
+  .swap-card .join:hover{color:#fff}
   .swap-card p{color:var(--muted);font-size:.86rem;margin:8px 0 14px;flex:1}
   .chips{display:flex;gap:8px;flex-wrap:wrap}
   .chip{font-size:.73rem;padding:4px 10px;border-radius:6px;background:var(--elevated);color:var(--txt)}

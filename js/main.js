@@ -1,4 +1,4 @@
-/* MAIN — CardSwap (GSAP), navigare Discord, formular -> /api/contact, Discord live */
+/* MAIN — CardSwap (GSAP), scroll nav, formular -> /api/contact, Discord live */
 /* ===== i18n ===== */
 const I18N={
  ro:{"nav.services":"Servicii","ch.home":"acasă","ch.svc":"servicii","ch.proj":"proiecte","ch.contact":"contact","ch.topic":"Servere & boți de Discord, făcute ca la carte.","u.online":"online","nav.projects":"Proiecte","nav.faq":"FAQ","nav.contact":"Contact",
@@ -126,9 +126,10 @@ $("send").addEventListener("click",async()=>{
 })();
 
 
-/* ===== Discord: avatar (bot token) + iconițe servere (invite) ===== */
+/* ===== Discord: avatar (bot token) + iconițe/nume/membri servere (invite) ===== */
 (function(){
   const cards=[...document.querySelectorAll('.swap-card[data-invite]')].filter(c=>c.dataset.invite);
+  cards.forEach(c=>{const a=c.querySelector('.join'); if(a) a.href='https://discord.gg/'+c.dataset.invite;});
   const codes=[...new Set(cards.map(c=>c.dataset.invite))];
   const avatars=[...document.querySelectorAll('.js-avatar')];
   if(!codes.length && !avatars.length) return;
@@ -143,12 +144,8 @@ $("send").addEventListener("click",async()=>{
         const srv=d.servers && d.servers[c.dataset.invite]; if(!srv) return;
         const art=c.querySelector('.art');
         if(srv.icon && art){art.textContent='';art.style.backgroundImage=`url(${srv.icon})`;art.style.backgroundSize='cover';art.style.backgroundPosition='center';}
-        if(srv.members!=null){
-          const chips=c.querySelector('.chips');
-          if(chips && !chips.querySelector('.js-members')){
-            const s=document.createElement('span');s.className='chip js-members';s.textContent=srv.members.toLocaleString('ro-RO')+' membri';chips.appendChild(s);
-          }
-        }
+        if(srv.name){const n=c.querySelector('.js-name'); if(n) n.textContent=srv.name;}
+        if(srv.members!=null){const m=c.querySelector('.js-members'); if(m) m.textContent=srv.members.toLocaleString('en-US')+' members';}
       });
     })
     .catch(()=>{});

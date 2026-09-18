@@ -1,4 +1,3 @@
-// /api/discord — avatarul tau (bot token) + iconite/nr. membri servere (invite code)
 export default async function handler(req, res) {
   const TOKEN = process.env.DISCORD_BOT_TOKEN;
   const USER_ID = process.env.DISCORD_USER_ID;
