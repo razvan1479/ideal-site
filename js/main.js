@@ -1,4 +1,4 @@
-/* MAIN — CardSwap (GSAP), scroll nav, formular -> /api/contact, Discord live */
+/* MAIN — CardSwap, scroll nav, formular -> /api/contact, profil (API) + Lanyard (status live) */
 /* ===== i18n ===== */
 const I18N={
  ro:{"nav.services":"Servicii","ch.home":"acasă","ch.svc":"servicii","ch.proj":"proiecte","ch.contact":"contact","ch.topic":"Servere & boți de Discord, făcute ca la carte.","u.online":"online","nav.projects":"Proiecte","nav.faq":"FAQ","nav.contact":"Contact",
@@ -137,7 +137,12 @@ $("send").addEventListener("click",async()=>{
     .then(r=>r.ok?r.json():null)
     .then(d=>{
       if(!d) return;
-      if(d.user && d.user.avatar){ avatars.forEach(el=>{el.textContent='';bg(el,d.user.avatar);}); }
+      if(d.user){
+        if(d.user.avatar){ avatars.forEach(el=>{el.textContent='';bg(el,d.user.avatar);}); }
+        if(d.user.banner){ document.querySelectorAll('.js-banner').forEach(el=>bg(el,d.user.banner)); }
+        if(d.user.name){ document.querySelectorAll('.js-uname').forEach(el=>el.textContent=d.user.name); }
+        if(d.user.username){ document.querySelectorAll('.js-tag').forEach(el=>el.textContent=d.user.username); }
+      }
       cards.forEach(c=>{
         const srv=d.servers && d.servers[c.dataset.invite]; if(!srv) return;
         const banner=c.querySelector('.banner'), icon=c.querySelector('.srv-icon'), name=c.querySelector('.js-name');
@@ -149,4 +154,37 @@ $("send").addEventListener("click",async()=>{
       });
     })
     .catch(()=>{});
+})();
+
+
+/* ===== Lanyard — status live + activitate (fara token) ===== */
+(function(){
+  const ID="1493163753447882894";
+  const dot=document.querySelector('.js-status');
+  const act=document.querySelector('.js-activity');
+  if(!dot && !act) return;
+  const setStatus=st=>{ if(dot) dot.className='dcard-status '+(st||'offline'); };
+  const setAct=txt=>{ if(!act) return; if(txt){act.textContent=txt;act.classList.add('on');} else act.classList.remove('on'); };
+  function pick(d){
+    if(d.listening_to_spotify && d.spotify) return '\u{1F3A7} '+d.spotify.song+' \u2014 '+d.spotify.artist;
+    const acts=d.activities||[];
+    const custom=acts.find(a=>a.type===4);
+    if(custom && (custom.state||custom.emoji)) return ((custom.emoji&&custom.emoji.name)?custom.emoji.name+' ':'')+(custom.state||'');
+    const game=acts.find(a=>a.type===0);
+    if(game) return '\u{1F3AE} Playing '+game.name;
+    const other=acts.find(a=>a.type!==4);
+    if(other) return other.name;
+    return '';
+  }
+  function load(){
+    fetch('https://api.lanyard.rest/v1/users/'+ID)
+      .then(r=>r.ok?r.json():null)
+      .then(j=>{ if(!j||!j.success) return; const d=j.data, u=d.discord_user||{};
+        setStatus(d.discord_status); setAct(pick(d));
+        document.querySelectorAll('.js-avatar').forEach(el=>{ if(!el.style.backgroundImage && u.avatar){ el.textContent=''; el.style.backgroundImage='url(https://cdn.discordapp.com/avatars/'+ID+'/'+u.avatar+'.'+(u.avatar.startsWith('a_')?'gif':'png')+'?size=160)'; el.style.backgroundSize='cover'; el.style.backgroundPosition='center'; } });
+        document.querySelectorAll('.js-uname').forEach(el=>{ if(u.global_name) el.textContent=u.global_name; });
+        document.querySelectorAll('.js-tag').forEach(el=>{ if(u.username) el.textContent=u.username; });
+      }).catch(()=>{});
+  }
+  load(); setInterval(load,30000);
 })();
