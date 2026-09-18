@@ -1,12 +1,13 @@
 # iDeaL — Discord servers & bots
 
 English-only, fundal negru, tubes la cursor. Top bar (avatar + nume + Request).
-Carduri = serverele tale: poza mare (iconita) + numele jos. Fara Join / membri.
-"Request": botul tau iti da DM cu ce a scris userul + buton "Reply on Discord".
+Carduri stil Discord: banner in fundal + iconita patrat in stanga + numele.
+Fallback banner: banner -> splash -> icon -> gradient. "Request": DM prin botul tau.
 
 ## Setup pe Vercel (o data)
 Env: DISCORD_BOT_TOKEN + DISCORD_USER_ID. Redeploy.
-Iconitele/numele vin din /api/discord (invite-urile sunt in index.html).
+Iconita/banner/nume vin din /api/discord (invite-urile sunt in index.html).
+Banner-ul apare doar daca serverul are banner setat (necesita boost/feature).
 
 ## Deploy
 git push → Vercel redeployeaza automat.

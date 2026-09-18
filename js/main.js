@@ -126,24 +126,26 @@ $("send").addEventListener("click",async()=>{
 })();
 
 
-/* ===== Discord: avatar (bot token) + iconițe/nume servere (invite) ===== */
+/* ===== Discord: avatar (bot token) + card-uri server (banner + icon + nume) ===== */
 (function(){
   const cards=[...document.querySelectorAll('.swap-card[data-invite]')].filter(c=>c.dataset.invite);
   const codes=[...new Set(cards.map(c=>c.dataset.invite))];
   const avatars=[...document.querySelectorAll('.js-avatar')];
   if(!codes.length && !avatars.length) return;
+  const bg=(el,url)=>{el.style.backgroundImage=`url(${url})`;el.style.backgroundSize='cover';el.style.backgroundPosition='center';};
   fetch('/api/discord?invites='+encodeURIComponent(codes.join(',')))
     .then(r=>r.ok?r.json():null)
     .then(d=>{
       if(!d) return;
-      if(d.user && d.user.avatar){
-        avatars.forEach(el=>{el.textContent='';el.style.backgroundImage=`url(${d.user.avatar})`;el.style.backgroundSize='cover';el.style.backgroundPosition='center';});
-      }
+      if(d.user && d.user.avatar){ avatars.forEach(el=>{el.textContent='';bg(el,d.user.avatar);}); }
       cards.forEach(c=>{
         const srv=d.servers && d.servers[c.dataset.invite]; if(!srv) return;
-        const art=c.querySelector('.art');
-        if(srv.icon && art){art.textContent='';art.style.backgroundImage=`url(${srv.icon})`;art.style.backgroundSize='cover';art.style.backgroundPosition='center';}
-        if(srv.name){const n=c.querySelector('.js-name'); if(n) n.textContent=srv.name;}
+        const banner=c.querySelector('.banner'), icon=c.querySelector('.srv-icon'), name=c.querySelector('.js-name');
+        const bimg=srv.banner||srv.splash||srv.icon;      // banner -> splash -> icon (fallback)
+        if(bimg && banner) bg(banner,bimg);
+        if(srv.icon && icon){icon.textContent='';bg(icon,srv.icon);}
+        else if(icon && srv.name){icon.textContent=srv.name[0].toUpperCase();}
+        if(srv.name && name) name.textContent=srv.name;
       });
     })
     .catch(()=>{});
