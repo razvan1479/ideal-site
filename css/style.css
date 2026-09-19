@@ -93,7 +93,8 @@
   .dcard-sub .sep{opacity:.6;margin:0 4px}
   .dcard-badges{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
   .dcard-badges .np{background:#1e1f22;border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:.78rem;color:#dbdee1}
-  .dcard-badges .bdg{width:24px;height:24px;border-radius:6px;background:#1e1f22;display:grid;place-items:center;font-size:.8rem;color:#b5bac1}
+  .js-badges{display:inline-flex;align-items:center;gap:5px;flex-wrap:wrap}
+  .js-badges img{width:22px;height:22px;display:block}
   .dcard-actions{display:flex;gap:8px;margin-top:14px}
   .dcard-actions .dc-msg{flex:1;text-align:center;background:#1e1f22;color:#dbdee1;font-weight:600;font-size:.9rem;padding:9px 0;border-radius:8px}
   .dcard-actions .dc-msg:hover{background:#2b2d31}

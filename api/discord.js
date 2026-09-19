@@ -1,16 +1,6 @@
 export default async function handler(req, res) {
-  const TOKEN = process.env.DISCORD_BOT_TOKEN, USER_ID = process.env.DISCORD_USER_ID;
   const invites = String(req.query.invites || "").split(",").map(s=>s.trim()).filter(Boolean).slice(0,25);
-  const out = { user: null, servers: {} };
-  try {
-    if (TOKEN && USER_ID) {
-      const r = await fetch(`https://discord.com/api/v10/users/${USER_ID}`, { headers: { Authorization: `Bot ${TOKEN}` } });
-      if (r.ok) { const u = await r.json();
-        out.user = { name: u.global_name || u.username, username: u.username,
-          avatar: u.avatar ? `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.${u.avatar.startsWith("a_")?"gif":"png"}?size=160` : `https://cdn.discordapp.com/embed/avatars/0.png`,
-          banner: u.banner ? `https://cdn.discordapp.com/banners/${u.id}/${u.banner}.${u.banner.startsWith("a_")?"gif":"png"}?size=600` : null }; }
-    }
-  } catch (_) {}
+  const out = { servers: {} };
   await Promise.all(invites.map(async (code) => {
     try { const r = await fetch(`https://discord.com/api/v10/invites/${code}?with_counts=true`); if (!r.ok) return;
       const d = await r.json(); const g = d.guild || {};

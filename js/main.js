@@ -1,4 +1,4 @@
-/* MAIN — CardSwap, scroll nav, formular -> /api/contact, profil (API) + Lanyard (status live) */
+/* MAIN — CardSwap, scroll nav, formular, profil: dstn (avatar/banner/badges) + Lanyard (status) */
 /* ===== i18n ===== */
 const I18N={
  ro:{"nav.services":"Servicii","ch.home":"acasă","ch.svc":"servicii","ch.proj":"proiecte","ch.contact":"contact","ch.topic":"Servere & boți de Discord, făcute ca la carte.","u.online":"online","nav.projects":"Proiecte","nav.faq":"FAQ","nav.contact":"Contact",
@@ -157,6 +157,28 @@ $("send").addEventListener("click",async()=>{
 })();
 
 
+/* ===== dcdn.dstn.to — avatar + banner GIF + badges + accent (fara token) ===== */
+(function(){
+  const ID="1493163753447882894";
+  const bg=(el,url)=>{el.textContent='';el.style.backgroundImage='url('+url+')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';};
+  fetch('https://dcdn.dstn.to/profile/'+ID)
+    .then(r=>r.ok?r.json():null)
+    .then(j=>{ if(!j) return; const u=j.user||{};
+      document.querySelectorAll('.js-avatar').forEach(el=>bg(el,'https://dcdn.dstn.to/avatars/'+ID+'?size=160'));
+      const banner=document.querySelector('.js-banner');
+      if(banner){ if(u.banner) bg(banner,'https://dcdn.dstn.to/banners/'+ID+'?size=600');
+        else if(typeof u.accent_color==='number'){ banner.style.backgroundImage='none'; banner.style.backgroundColor='#'+u.accent_color.toString(16).padStart(6,'0'); } }
+      if(u.global_name) document.querySelectorAll('.js-uname').forEach(el=>el.textContent=u.global_name);
+      if(u.username) document.querySelectorAll('.js-tag').forEach(el=>el.textContent=u.username);
+      const bc=document.querySelector('.js-badges');
+      if(bc && Array.isArray(j.badges)){ bc.innerHTML=''; j.badges.forEach(b=>{ if(!b.icon) return;
+        const img=document.createElement('img'); img.loading='lazy';
+        img.src='https://cdn.discordapp.com/badge-icons/'+b.icon+'.png';
+        img.alt=b.description||''; img.title=b.description||''; bc.appendChild(img); }); }
+    })
+    .catch(()=>{});
+})();
+
 /* ===== Lanyard — status live + activitate (fara token) ===== */
 (function(){
   const ID="1493163753447882894";
@@ -181,6 +203,9 @@ $("send").addEventListener("click",async()=>{
       .then(r=>r.ok?r.json():null)
       .then(j=>{ if(!j||!j.success) return; const d=j.data, u=d.discord_user||{};
         setStatus(d.discord_status); setAct(pick(d));
+        const banner=document.querySelector('.js-banner');
+        if(banner){ const cur=banner.style.backgroundImage; const hasImg=cur && cur!=='none' && cur.indexOf('url(')>-1;
+          if(!hasImg && typeof u.accent_color==='number'){ banner.style.backgroundImage='none'; banner.style.backgroundColor='#'+u.accent_color.toString(16).padStart(6,'0'); } }
         document.querySelectorAll('.js-avatar').forEach(el=>{ if(!el.style.backgroundImage && u.avatar){ el.textContent=''; el.style.backgroundImage='url(https://cdn.discordapp.com/avatars/'+ID+'/'+u.avatar+'.'+(u.avatar.startsWith('a_')?'gif':'png')+'?size=160)'; el.style.backgroundSize='cover'; el.style.backgroundPosition='center'; } });
         document.querySelectorAll('.js-uname').forEach(el=>{ if(u.global_name) el.textContent=u.global_name; });
         document.querySelectorAll('.js-tag').forEach(el=>{ if(u.username) el.textContent=u.username; });
