@@ -1,4 +1,4 @@
-/* MAIN — CardSwap, nav, form, profil: dstn (avatar/banner/badges/guild-tag) + Lanyard (status) */
+/* MAIN — CardSwap, nav, form, profil dstn+Lanyard, nr servere auto */
 /* ===== i18n ===== */
 const I18N={
  ro:{"nav.services":"Servicii","ch.home":"acasă","ch.svc":"servicii","ch.proj":"proiecte","ch.contact":"contact","ch.topic":"Servere & boți de Discord, făcute ca la carte.","u.online":"online","nav.projects":"Proiecte","nav.faq":"FAQ","nav.contact":"Contact",
@@ -156,6 +156,12 @@ $("send").addEventListener("click",async()=>{
     .catch(()=>{});
 })();
 
+
+/* ===== numar servere = numar carduri ===== */
+(function(){
+  const n=document.querySelectorAll('.swap-card[data-invite]').length || document.querySelectorAll('.swap-card').length;
+  document.querySelectorAll('.js-servercount').forEach(el=>el.textContent=n);
+})();
 
 /* ===== dcdn.dstn.to — avatar + banner GIF + badges + accent (fara token) ===== */
 (function(){
