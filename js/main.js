@@ -1,4 +1,4 @@
-/* MAIN — CardSwap, nav, form, profil dstn+Lanyard, nr servere auto */
+/* MAIN — CardSwap, nav, form, profil 100% auto (dstn) + Lanyard status */
 /* ===== i18n ===== */
 const I18N={
  ro:{"nav.services":"Servicii","ch.home":"acasă","ch.svc":"servicii","ch.proj":"proiecte","ch.contact":"contact","ch.topic":"Servere & boți de Discord, făcute ca la carte.","u.online":"online","nav.projects":"Proiecte","nav.faq":"FAQ","nav.contact":"Contact",
@@ -181,6 +181,31 @@ $("send").addEventListener("click",async()=>{
         gt.innerHTML='';
         if(pg.badge && pg.identity_guild_id){ const im=document.createElement('img'); im.src='https://cdn.discordapp.com/clan-badges/'+pg.identity_guild_id+'/'+pg.badge+'.png?size=24'; im.alt=''; gt.appendChild(im); }
         gt.appendChild(document.createTextNode(pg.tag)); gt.classList.add('on');
+      }
+      const st=u.display_name_styles;
+      if(st && Array.isArray(st.colors) && st.colors.length){
+        const cols=st.colors.map(c=>'#'+(c>>>0).toString(16).padStart(6,'0'));
+        const grad='linear-gradient(90deg,'+cols.join(',')+')';
+        document.querySelectorAll('.dcard-name').forEach(el=>{el.style.background=grad;el.style.webkitBackgroundClip='text';el.style.backgroundClip='text';el.style.color='transparent';});
+      }
+      const bio=u.bio||(j.user_profile&&j.user_profile.bio);
+      if(bio) document.querySelectorAll('.js-bio').forEach(el=>el.textContent=bio);
+      try{ const ms=Number(BigInt(ID)>>22n)+1420070400000; const f=new Date(ms).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+        document.querySelectorAll('.js-since').forEach(el=>el.textContent=f); }catch(_){}
+      const cc=document.querySelector('.js-connections');
+      if(cc && Array.isArray(j.connected_accounts)){
+        const glyph={steam:'\u25c8',tiktok:'\u266a',riotgames:'\u2b22',spotify:'\u266b',xbox:'\u25a3',youtube:'\u25b6'};
+        const link={steam:a=>'https://steamcommunity.com/profiles/'+a.id, tiktok:a=>'https://www.tiktok.com/@'+a.name};
+        let h='';
+        j.connected_accounts.forEach(a=>{ const m=a.metadata||{}; let sub='';
+          if(a.type==='steam'){ const s=m.created_at?('Member since '+new Date(m.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})):''; const g=m.game_count?(m.game_count+' Games'):''; sub=[s,g].filter(Boolean).join(' \u00b7 '); }
+          else if(a.type==='tiktok'){ sub=[m.follower_count&&m.follower_count+' Followers',m.following_count&&m.following_count+' Following',m.likes_count&&m.likes_count+' Likes'].filter(Boolean).join(' \u00b7 '); }
+          const url=link[a.type]?link[a.type](a):null;
+          const nm=url?('<a href="'+url+'" target="_blank" rel="noreferrer">'+a.name+' \u2197</a>'):a.name;
+          h+='<div class="conn"><span class="conn-ic '+a.type+'">'+(glyph[a.type]||'\u25c8')+'</span><div class="conn-b"><div class="conn-n">'+nm+'</div>'+(sub?'<div class="conn-s">'+sub+'</div>':'')+'</div></div>';
+        });
+        h+='<div class="conn-add">+ Add Connection</div>';
+        cc.innerHTML=h;
       }
       const bc=document.querySelector('.js-badges');
       if(bc && Array.isArray(j.badges)){ bc.innerHTML=''; j.badges.forEach(b=>{ if(!b.icon) return;
