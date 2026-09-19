@@ -1,4 +1,4 @@
-/* MAIN — CardSwap, scroll nav, formular, profil: dstn (avatar/banner/badges) + Lanyard (status) */
+/* MAIN — CardSwap, nav, form, profil: dstn (avatar/banner/badges/guild-tag) + Lanyard (status) */
 /* ===== i18n ===== */
 const I18N={
  ro:{"nav.services":"Servicii","ch.home":"acasă","ch.svc":"servicii","ch.proj":"proiecte","ch.contact":"contact","ch.topic":"Servere & boți de Discord, făcute ca la carte.","u.online":"online","nav.projects":"Proiecte","nav.faq":"FAQ","nav.contact":"Contact",
@@ -170,6 +170,12 @@ $("send").addEventListener("click",async()=>{
         else if(typeof u.accent_color==='number'){ banner.style.backgroundImage='none'; banner.style.backgroundColor='#'+u.accent_color.toString(16).padStart(6,'0'); } }
       if(u.global_name) document.querySelectorAll('.js-uname').forEach(el=>el.textContent=u.global_name);
       if(u.username) document.querySelectorAll('.js-tag').forEach(el=>el.textContent=u.username);
+      const pg=u.primary_guild||u.clan, gt=document.querySelector('.js-guildtag');
+      if(gt && pg && pg.tag && (pg.identity_enabled!==false)){
+        gt.innerHTML='';
+        if(pg.badge && pg.identity_guild_id){ const im=document.createElement('img'); im.src='https://cdn.discordapp.com/clan-badges/'+pg.identity_guild_id+'/'+pg.badge+'.png?size=24'; im.alt=''; gt.appendChild(im); }
+        gt.appendChild(document.createTextNode(pg.tag)); gt.classList.add('on');
+      }
       const bc=document.querySelector('.js-badges');
       if(bc && Array.isArray(j.badges)){ bc.innerHTML=''; j.badges.forEach(b=>{ if(!b.icon) return;
         const img=document.createElement('img'); img.loading='lazy';

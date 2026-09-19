@@ -88,7 +88,11 @@
   .dcard-activity.on{display:block}
   .dcard-tagpill{position:absolute;top:118px;left:118px;background:#111214;color:#dbdee1;font-size:.78rem;font-weight:600;padding:6px 12px;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.5);z-index:2}
   .dcard-info{padding:56px 18px 18px}
+  .dcard-nrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .dcard-name{font-family:"Fredoka",var(--font);font-weight:700;font-size:1.7rem;line-height:1;background:linear-gradient(90deg,#b57bff,#e56bd8);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .guild-tag{display:none;align-items:center;gap:4px;background:#1e1f22;border:1px solid var(--line);border-radius:6px;padding:2px 7px;font-size:.72rem;font-weight:700;color:#dbdee1;letter-spacing:.02em}
+  .guild-tag.on{display:inline-flex}
+  .guild-tag img{width:15px;height:15px;display:block}
   .dcard-sub{color:var(--muted);font-size:.9rem;margin-top:6px}
   .dcard-sub .sep{opacity:.6;margin:0 4px}
   .dcard-badges{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
