@@ -1,4 +1,4 @@
-/* MAIN — CardSwap, nav, form, profil 100% auto (dstn) + Lanyard status */
+/* MAIN — CardSwap + bara navigare, nav, form, profil dstn + Lanyard */
 /* ===== i18n ===== */
 const I18N={
  ro:{"nav.services":"Servicii","ch.home":"acasă","ch.svc":"servicii","ch.proj":"proiecte","ch.contact":"contact","ch.topic":"Servere & boți de Discord, făcute ca la carte.","u.online":"online","nav.projects":"Proiecte","nav.faq":"FAQ","nav.contact":"Contact",
@@ -93,12 +93,36 @@ $("send").addEventListener("click",async()=>{
     tl.set(cards[front],{x:back.x,z:back.z},"return");
     tl.to(cards[front],{y:back.y,duration:CFG.durReturn,ease:CFG.ease},"return");
     order=[...rest,front];
+    updateDots();
   }
   function start(){if(rm||timer)return;timer=setInterval(swap,CFG.delay);}
   function stop(){clearInterval(timer);timer=null;}
+  function restart(){stop();start();}
+  // asezare rapida (pt. navigare manuala)
+  function place(){ order.forEach((idx,k)=>{const s=slot(k);
+    gsap.set(cards[idx],{zIndex:s.zIndex});
+    gsap.to(cards[idx],{x:s.x,y:s.y,z:s.z,duration:.55,ease:"power3.out",overwrite:true});}); }
+  function goTo(cardIdx){ const pos=order.indexOf(cardIdx); if(pos<0) return;
+    stop(); gsap.killTweensOf(cards);
+    order=[...order.slice(pos),...order.slice(0,pos)]; place(); updateDots(); start(); }
+  function next(){ stop(); gsap.killTweensOf(cards); order=[...order.slice(1),order[0]]; place(); updateDots(); start(); }
+  function prev(){ stop(); gsap.killTweensOf(cards); order=[order[total-1],...order.slice(0,total-1)]; place(); updateDots(); start(); }
+
+  // bara de navigare sub carduri
+  const stage=deck.closest(".swap-stage")||deck.parentNode;
+  const nav=document.createElement("div"); nav.className="swap-nav";
+  const pv=document.createElement("button"); pv.className="swap-arrow"; pv.setAttribute("aria-label","Anterior"); pv.textContent="‹";
+  const dots=document.createElement("div"); dots.className="swap-dots";
+  const nx=document.createElement("button"); nx.className="swap-arrow"; nx.setAttribute("aria-label","Următor"); nx.textContent="›";
+  cards.forEach((_,i)=>{ const d=document.createElement("button"); d.className="swap-dot"; d.addEventListener("click",()=>goTo(i)); dots.appendChild(d); });
+  nav.appendChild(pv); nav.appendChild(dots); nav.appendChild(nx);
+  stage.parentNode.insertBefore(nav, stage.nextSibling);
+  pv.addEventListener("click",prev); nx.addEventListener("click",next);
+  function updateDots(){ const f=order[0]; [...dots.children].forEach((d,i)=>d.classList.toggle("active",i===f)); }
+
   deck.addEventListener("mouseenter",stop);
   deck.addEventListener("mouseleave",start);
-  start();
+  updateDots(); start();
 })();
 
 /* ===== nav stil Discord: scroll, active, drawer ===== */
