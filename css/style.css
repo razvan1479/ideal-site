@@ -1,3 +1,7 @@
+/* fonturi self-hosted (GDPR: fara Google Fonts) */
+@font-face{font-family:'Inter';src:url('../fonts/Inter.ttf') format('truetype');font-weight:100 900;font-display:swap}
+@font-face{font-family:'Fredoka';src:url('../fonts/Fredoka.ttf') format('truetype');font-weight:300 700;font-display:swap}
+
   :root{
     --blurple:#5865F2; --blurple-h:#4752c4;
     --rail:#000000; --sidebar:#08080a; --main:transparent; --card:rgba(14,14,18,.82); --elevated:rgba(44,44,52,.82); --input:rgba(0,0,0,.62);
@@ -195,3 +199,18 @@
     .swap-stage{height:440px}.cardswap{left:50%;transform:translateX(-46%) scale(.82);transform-origin:bottom center}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sr{animation:none;opacity:1;transform:none;transition:none}}
+
+  /* cookie consent + consent checkbox */
+  .cookie{position:fixed;left:0;right:0;bottom:0;z-index:400;background:rgba(11,12,17,.97);border-top:1px solid rgba(255,255,255,.1);padding:16px 20px}
+  .cookie-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between}
+  .cookie p{margin:0;color:#b5bac1;font-size:.88rem;max-width:72ch;line-height:1.5}
+  .cookie a{color:#a6b0ff}
+  .cookie-btns{display:flex;gap:10px;flex:none}
+  .cookie .btn{padding:9px 20px}
+  .ck-rej{background:transparent;border:1px solid rgba(255,255,255,.18);color:#dbdee1;border-radius:8px;font-family:var(--font);font-weight:600;font-size:.9rem;padding:9px 20px;cursor:pointer}
+  .ck-rej:hover{border-color:#fff}
+  .consent{display:flex;gap:9px;align-items:flex-start;color:#b5bac1;font-size:.82rem;margin:2px 0 14px;line-height:1.4}
+  .consent input{margin-top:3px;accent-color:var(--blurple)}
+  .consent a{color:#a6b0ff}
+  .foot2{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:#949ba4;font-size:.85rem}
+  .foot-links a{color:#949ba4}.foot-links a:hover{color:#fff}

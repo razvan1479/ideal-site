@@ -1,4 +1,4 @@
-/* MAIN — CardSwap + bara navigare, nav, form, profil dstn + Lanyard */
+/* MAIN — CardSwap+nav, form, profil dstn+Lanyard (consent-gated), cookie banner */
 /* ===== i18n ===== */
 const I18N={
  ro:{"nav.services":"Servicii","ch.home":"acasă","ch.svc":"servicii","ch.proj":"proiecte","ch.contact":"contact","ch.topic":"Servere & boți de Discord, făcute ca la carte.","u.online":"online","nav.projects":"Proiecte","nav.faq":"FAQ","nav.contact":"Contact",
@@ -56,6 +56,8 @@ $("send").addEventListener("click",async()=>{
   const t=$("toast");
   const name=$("f-name").value.trim(),desc=$("f-desc").value.trim();
   if(!name||!desc){t.style.color="#e06565";t.textContent="Please fill in at least your name and the project description.";return;}
+  const cons=document.getElementById("f-consent");
+  if(cons&&!cons.checked){t.style.color="#e06565";t.textContent="Please accept the Privacy Policy first.";return;}
   const data={name,discord:$("f-discord").value.trim(),budget:$("f-budget").value.trim(),project:desc};
   const plain=`New iDeaL request\nName: ${name}\nDiscord: ${data.discord||"-"}\nBudget: ${data.budget||"-"}\nProject: ${desc}`;
   t.style.color="var(--muted)";t.textContent="Sending…";
@@ -189,7 +191,7 @@ $("send").addEventListener("click",async()=>{
 
 /* ===== dcdn.dstn.to — avatar + banner GIF + badges + accent (fara token) ===== */
 (function(){
-  const ID="1493163753447882894";
+  const ID="1493163753447882894"; if((localStorage.getItem("ideal-consent")||"")!=="accepted")return;
   const bg=(el,url)=>{el.textContent='';el.style.backgroundImage='url('+url+')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';};
   fetch('https://dcdn.dstn.to/profile/'+ID)
     .then(r=>r.ok?r.json():null)
@@ -242,7 +244,7 @@ $("send").addEventListener("click",async()=>{
 
 /* ===== Lanyard — status live + activitate (fara token) ===== */
 (function(){
-  const ID="1493163753447882894";
+  const ID="1493163753447882894"; if((localStorage.getItem("ideal-consent")||"")!=="accepted")return;
   const dot=document.querySelector('.js-status');
   const act=document.querySelector('.js-activity');
   if(!dot && !act) return;

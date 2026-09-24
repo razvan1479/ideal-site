@@ -4,10 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>iDeaL — Servere & boți de Discord</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="assets/js/gsap.min.js"></script>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -59,7 +56,7 @@
             <div class="swap-card" data-invite="WnfvTt6qCA"><div class="banner"></div><div class="scrim"></div><div class="foot"><div class="srv-icon"></div><h3 class="js-name">Discord server</h3></div></div>
             <div class="swap-card" data-invite="bPJ3aKSZvh"><div class="banner"></div><div class="scrim"></div><div class="foot"><div class="srv-icon"></div><h3 class="js-name">Discord server</h3></div></div>
             <div class="swap-card" data-invite="8zdvwgSJw3"><div class="banner"></div><div class="scrim"></div><div class="foot"><div class="srv-icon"></div><h3 class="js-name">Discord server</h3></div></div>
-            <div class="swap-card" data-invite="NKpEjmf7Mj"><div class="banner"></div><div class="scrim"></div><div class="foot"><div class="srv-icon"></div><h3 class="js-name">Discord server</h3></div></div>
+            <div class="swap-card" data-invite="3qmpqn8hBW"><div class="banner"></div><div class="scrim"></div><div class="foot"><div class="srv-icon"></div><h3 class="js-name">Discord server</h3></div></div>
           </div>
         </div>
       </div></section>
@@ -93,17 +90,27 @@
           <div class="field"><label data-i18n="ct.l2">Your Discord</label><input id="f-discord" type="text" placeholder="username, or User ID for 1-click reply"></div>
           <div class="field"><label data-i18n="ct.l3">Care e bugetul tău?</label><input id="f-budget" type="text" placeholder="ex. €30 – €100"></div>
           <div class="field"><label data-i18n="ct.l4">Descrie proiectul</label><textarea id="f-desc" data-i18n-ph="ct.p4" placeholder="Ce vrei să construiesc?"></textarea></div>
+          <label class="consent"><input type="checkbox" id="f-consent"> <span>I agree to the <a href="privacy.html" target="_blank" rel="noreferrer">Privacy Policy</a> and to being contacted on Discord.</span></label>
           <button class="btn btn-send" id="send" data-i18n="ct.btn">Cere un server</button>
           <div class="toast" id="toast"></div>
         </div>
         </div>
       </div></section>
 
-      <footer><div class="wrap">© 2026 iDeaL · Discord servers &amp; bots</div></footer>
+      <footer><div class="wrap foot2"><span>© 2026 iDeaL · Discord servers &amp; bots</span><span class="foot-links"><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms</a> · <a href="#" id="ck-manage">Cookie settings</a></span></div></footer>
     </div>
   </main>
 </div>
 
+<div class="cookie" id="cookie" hidden>
+  <div class="cookie-in">
+    <p>This site uses only essential storage. To show the live Discord profile it loads data from third-party services (Lanyard, dcdn.dstn.to). These run only if you accept. See the <a href="privacy.html">Privacy Policy</a>.</p>
+    <div class="cookie-btns">
+      <button class="ck-rej" id="ck-reject">Reject</button>
+      <button class="btn" id="ck-accept">Accept</button>
+    </div>
+  </div>
+</div>
 <script src="js/main.js"></script>
 <script type="module">
   const c=document.getElementById('tubes');
@@ -133,6 +140,18 @@
       })
       .catch(err=>console.error('tubes load failed:',err));
   }
+
+/* ===== cookie consent ===== */
+(function(){
+  var box=document.getElementById("cookie");
+  var c=""; try{c=localStorage.getItem("ideal-consent")||"";}catch(e){}
+  if(box && !c) box.hidden=false;
+  function set(v){ try{localStorage.setItem("ideal-consent",v);}catch(e){} }
+  var a=document.getElementById("ck-accept"), r=document.getElementById("ck-reject"), m=document.getElementById("ck-manage");
+  if(a) a.addEventListener("click",function(){ set("accepted"); if(box) box.hidden=true; location.reload(); });
+  if(r) r.addEventListener("click",function(){ set("rejected"); if(box) box.hidden=true; });
+  if(m) m.addEventListener("click",function(e){ e.preventDefault(); if(box) box.hidden=false; });
+})();
 </script>
 </body>
 </html>
