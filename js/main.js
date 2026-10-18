@@ -1,4 +1,4 @@
-/* MAIN — CardSwap+nav, form, profil dstn+Lanyard (consent-gated), cookie banner */
+/* MAIN */
 /* ===== FORMULAR → DISCORD (fără email) ===== */
 const BOT_ENDPOINT   = "";  // DM real via botul tău
 const DISCORD_WEBHOOK= "";  // canal privat (webhook)
@@ -82,8 +82,16 @@ $("send").addEventListener("click",async()=>{
   const deck=$("cardswap");if(!deck||typeof gsap==="undefined")return;
   const cards=[...deck.querySelectorAll(".swap-card")];
   const total=cards.length;
-  const CFG={cardDistance:34,verticalDistance:36,delay:3600,skew:6,durDrop:1.5,durMove:1.5,durReturn:1.5,ease:"elastic.out(0.62,0.85)"};
+  // spatiere adaptiva: cu cat sunt mai multe carduri, cu atat teancul e mai strans,
+  // ca sa incapa tot in zona vizibila indiferent de cate servere ai.
+  const SPREAD_X=210, SPREAD_Y=188;            // intinderea totala maxima (px)
+  const n1=Math.max(total-1,1);
+  const CFG={cardDistance:Math.min(34,SPREAD_X/n1),verticalDistance:Math.min(36,SPREAD_Y/n1),
+             delay:3600,skew:6,durDrop:1.5,durMove:1.5,durReturn:1.5,ease:"elastic.out(0.62,0.85)"};
   const slot=i=>({x:i*CFG.cardDistance,y:-i*CFG.verticalDistance,z:-i*CFG.cardDistance*1.6,zIndex:total-i});
+  // centram tot evantaiul pe mijlocul scenei
+  (function center(){ const cardW=256, spread=n1*CFG.cardDistance;
+    deck.style.left="calc(50% - "+Math.round((cardW+spread)/2)+"px)"; })();
   cards.forEach((el,i)=>{const s=slot(i);gsap.set(el,{x:s.x,y:s.y,z:s.z,zIndex:s.zIndex,skewY:CFG.skew,transformOrigin:"center center"});});
   let order=cards.map((_,i)=>i),timer=null;
   function swap(){
