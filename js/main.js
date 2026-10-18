@@ -1,4 +1,9 @@
 /* MAIN — CardSwap+nav, form, profil dstn+Lanyard (consent-gated), cookie banner */
+/* ===== FORMULAR → DISCORD (fără email) ===== */
+const BOT_ENDPOINT   = "";  // DM real via botul tău
+const DISCORD_WEBHOOK= "";  // canal privat (webhook)
+const DISCORD_USER   = "iDeaL";
+
 /* ===== i18n ===== */
 const I18N={
  ro:{"nav.services":"Servicii","ch.home":"acasă","ch.svc":"servicii","ch.proj":"proiecte","ch.contact":"contact","ch.topic":"Servere & boți de Discord, făcute ca la carte.","u.online":"online","nav.projects":"Proiecte","nav.faq":"FAQ","nav.contact":"Contact",

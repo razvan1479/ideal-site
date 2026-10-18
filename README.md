@@ -1,18 +1,9 @@
 # iDeaL site — GDPR ready
 
-Ce e inclus pentru hosting legal in UE:
-- Banner de cookies (Accept/Reject). Profilul (Lanyard + dcdn.dstn.to) se incarca DOAR dupa Accept.
-- Checkbox de consimtamant pe formular (Privacy Policy).
-- Pagini privacy.html si terms.html (TEMPLATE — completeaza [YOUR NAME]/[YOUR EMAIL]).
-- Fonturi (Inter, Fredoka) si GSAP SELF-HOSTED (fara Google Fonts / cdnjs) => nu trimit IP la CDN-uri.
+8 servere pe carduri (data-invite). 'servers built' se calculeaza automat.
+Profil live fara token: dstn + Lanyard (consent-gated). Request pe Discord via webhook.
+Fonturi (Inter, Fredoka) + GSAP self-hosted (fara Google Fonts/CDN).
 
-## De completat de tine (obligatoriu)
-- In privacy.html si terms.html: [YOUR NAME], [YOUR EMAIL].
-- Nu sunt sfat juridic — verifica textele pt. situatia ta.
-
-## Structura
-index.html · css/style.css · js/main.js · api/{discord,contact}.js
-fonts/{Inter,Fredoka}.ttf · assets/js/gsap.min.js · privacy.html · terms.html
-
-## Vercel (request pe Discord): DISCORD_WEBHOOK_URL (+ DISCORD_USER_ID).
+## De completat: in privacy.html / terms.html -> [YOUR NAME], [YOUR EMAIL].
+## Vercel Env (request): DISCORD_WEBHOOK_URL (+ DISCORD_USER_ID).
 ## Deploy: git push -> redeploy.
